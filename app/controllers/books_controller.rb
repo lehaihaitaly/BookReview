@@ -3,10 +3,10 @@ class BooksController < ApplicationController
 	before_action :authenticate_user!, only: [:new, :edit]
 	def index
 		if params[:category].blank?
-		@books = Book.all
+		@books = Book.paginate(:page => params[:page], :per_page => 8)
 	    else
 	    @category_id = Category.find_by(name: params[:category]).id
-	    @books = Book.where(:category_id => @category_id)
+	    @books = Book.where(:category_id => @category_id).paginate(:page => params[:page], :per_page => 8)
 
 	end
 	end
@@ -28,6 +28,7 @@ class BooksController < ApplicationController
 		@book = current_user.books.build(books_params)
 		@book.category_id = params[:category_id]
 		if @book.save
+			flash[:notice] = "Movie created sucesfully!"
 			redirect_to root_path
 		else
 			render 'new'
@@ -43,6 +44,7 @@ class BooksController < ApplicationController
 		@book.category_id = params[:category_id]
 
 		if @book.update(books_params)
+			flash[:notice] = "Movie updated sucesfully!"
 			redirect_to book_path(@book)
 		else
 			render 'edit'
@@ -51,6 +53,7 @@ class BooksController < ApplicationController
 
 	def destroy
 		@book.destroy
+		flash[:notice] = "Movie destroyed sucesfully!"
 		redirect_to root_path
 	end
 	private

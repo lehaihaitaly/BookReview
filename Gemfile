@@ -65,3 +65,5 @@ gem 'twitter-bootstrap-rails'
 gem 'paperclip', '~> 4.3', '>= 4.3.6'
 gem 'ratyrate'
 gem "font-awesome-rails"
+gem 'will_paginate', '~> 3.1.0'
+gem 'devise-i18n'

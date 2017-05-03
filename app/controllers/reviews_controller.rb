@@ -11,6 +11,7 @@ class ReviewsController < ApplicationController
 		@review.book_id = @book.id
 		@review.user_id = current_user.id
 		if @review.save
+			flash[:notice] = "Reviews created sucesfully!"
 			redirect_to book_path(@book)
 		else
 			render 'new'
@@ -21,6 +22,7 @@ end
 
 	def update
 		if @review.update(review_params)
+			flash[:notice] = "Reviews updated sucesfully!"
 			redirect_to book_path(@book)
 		else
 			render 'edit'
@@ -29,6 +31,7 @@ end
 
 	def destroy
 		@review.destroy
+		flash[:notice] = "Reviews destroyed sucesfully!"
 		redirect_to book_path(@book)
 
 	end
